@@ -14,10 +14,8 @@ def load_posts_replied_to():
 #checks the post for a valid prompt
 def check_valid_prompt(submission):
     posts_replied_to = load_posts_replied_to()
-    if submission.title.startswith('[WP]') and submission.id not in posts_replied_to:
-        return True
-    else:
-        return False
+    return submission.title.startswith('[WP]') and submission.id not in posts_replied_to
+
 
 #removes '[WP]' from the post to create a formatted prompt
 def format_prompt(submission):
@@ -34,6 +32,28 @@ def post_story(submission, story):
         for submission_id in posts_replied_to:
             f.write(submission_id + "\n")
     submission.reply(story)
+
+#searches for a satisfactory prompt for the user
+def find_prompt():
+    print("Fantastic! Please wait while I find a prompt.\n")
+    subreddit = reddit.subreddit('WritingPrompts')
+
+    for submission in subreddit.hot():
+        if check_valid_prompt(submission):
+            prompt = format_prompt(submission)
+            print("\n" + prompt + "\n")
+
+            while True:
+                user_approval = input("Is this prompt good?\n")
+                if user_approval in yesresponse:
+                    print("\nGreat!\n")
+                    return prompt
+                elif user_approval in noresponse:
+                    print("\nNo worries, I will find another prompt.\n")
+                    break
+                else:
+                    print("\nPlease answer 'yes' or 'no'.\n")
+
 
 #locate and load environment variables from .env file
 dotenv_path = find_dotenv()
@@ -53,7 +73,11 @@ reddit = praw.Reddit(client_id = client_id,
                      password = password, 
                      user_agent = user_agent)
 
+yesresponse = {"yes", "Yes", "YES", "y", "Y"}
+noresponse = {"no", "No", "NO", "n", "N"}
+
 #make the post
+'''
 subreddit = reddit.subreddit('WritingPrompts')
 posts_made = 0
 for submission in subreddit.hot():
@@ -62,6 +86,6 @@ for submission in subreddit.hot():
         story = generate_story(prompt)
         post_story(submission, story)
         posts_made += 1
-
+'''
 #allow user to choose length of story and number of stories made
 #the stories are currently just longer versions of the prompt, need to find a way to make them more thrilling and not just expansions of the prompt
