@@ -1,6 +1,6 @@
 from reddit_bot import *
 
-#Welcomes the user to he bot
+#Welcomes the user to the bot
 welcome_msg = "Welcome to the Reddit Story Bot!\n"
 welcome_msg += "I am a bot creates AI generated stories in response to writing prompts from the r/WritingPrompts subreddit.\n"
 print(welcome_msg)
