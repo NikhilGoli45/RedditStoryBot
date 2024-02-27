@@ -24,7 +24,7 @@ pip install openai
 
 ``
 python -m pip install python-dotenv
-'''
+``
 
 After you have installed the above packages, you will now need to obtain a Reddit API key and an OpenAI API key.
 
