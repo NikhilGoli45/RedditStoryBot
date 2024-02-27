@@ -15,5 +15,5 @@ while True:
         print("\nThank you for using the Reddit Story Bot!\n")
         break
     else:
-        user = print("\nI didn't understand that.\n")
+        user = print("\nI didn't understand that. Please enter 'yes' or 'no'\n")
 exit()
